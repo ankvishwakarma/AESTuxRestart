@@ -20,7 +20,7 @@ pipeline {
 
     stage('Proceed to send mail to get Tux HA freeze') {
       steps {
-        input 'Proceed to send mail to get Tux HA Unfreeze'
+        input 'Proceed to send mail to get Tux HA freeze'
       }
     }
 
