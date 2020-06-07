@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Input Change No') {
       steps {
-        echo 'parg'
+        sh 'echo "${params.Change} : ${params.Spoc}" > /home/agd_user/.web/apache/htdocs/AIRTEL/AES_TUX_MAIL/tuxmaildetails.txt'
       }
     }
 
@@ -124,6 +124,7 @@ pipeline {
         echo 'Closure mail'
       }
     }
+
   }
   parameters {
     string(name: 'Change', description: 'Enter Change number')
