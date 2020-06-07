@@ -72,7 +72,7 @@ pipeline {
       }
     }
 
-    stage('Stop Tuxedo') {
+    stage('Start Tuxedo') {
       steps {
         echo 'Stop Tuxedo'
       }
