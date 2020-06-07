@@ -72,6 +72,12 @@ pipeline {
       }
     }
 
+    stage('Stop Tuxedo') {
+      steps {
+        echo 'Stop Tuxedo'
+      }
+    }
+    
     stage('Tux Bounce Mid mail') {
       steps {
         echo 'Tux bounce Mid mail'
