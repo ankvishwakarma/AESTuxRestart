@@ -77,7 +77,7 @@ pipeline {
         echo 'Stop Tuxedo'
       }
     }
-    
+
     stage('Tux Bounce Mid mail') {
       steps {
         echo 'Tux bounce Mid mail'
@@ -92,7 +92,7 @@ pipeline {
           }
         }
 
-        stage('AES NCore stop') {
+        stage('AES NCore start') {
           steps {
             echo 'AES NCore stop'
           }
