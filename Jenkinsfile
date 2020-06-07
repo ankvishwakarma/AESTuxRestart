@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Input Change No') {
       steps {
-        sh 'echo "${params.Change} : ${params.Spoc}" > /home/agd_user/.web/apache/htdocs/AIRTEL/AES_TUX_MAIL/tuxmaildetails.txt'
+        sh echo "${params.Change} : ${params.Spoc}" > /home/agd_user/.web/apache/htdocs/AIRTEL/AES_TUX_MAIL/tuxmaildetails.txt
       }
     }
 
