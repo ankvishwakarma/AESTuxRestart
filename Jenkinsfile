@@ -14,7 +14,7 @@ pipeline {
 
     stage('Head\'s Up Mail') {
       steps {
-        echo 'Head\'s Up mail'
+        sh '/home/agd_user/.web/apache/htdocs/AIRTEL/AES_TUX_MAIL/tux_bounce_mail.sh'
       }
     }
 
@@ -26,7 +26,7 @@ pipeline {
 
     stage('Mail to freeze AES Tux HA') {
       steps {
-        echo 'Mail sent'
+        sh '/home/agd_user/.web/apache/htdocs/AIRTEL/AES_TUX_MAIL/tux_bounce_mail1.sh'
       }
     }
 
@@ -40,19 +40,21 @@ pipeline {
       parallel {
         stage('iB2B Stop') {
           steps {
-            echo 'Stop iB2B'
+            sh '''ssh -q wasadmin@10.5.131.62 \'/home/wasadmin/SCRIPTS/jenkins/stopAppCluster.sh\'
+ssh -q wasadmin@10.5.131.64 \'/home/wasadmin/SCRIPTS/jenkins/stopRPTCluster.sh\'
+ssh -q wasadmin@10.5.131.64 \'/home/wasadmin/SCRIPTS/jenkins/stopSCHCluster.sh\''''
           }
         }
 
         stage('AES NCore stop') {
           steps {
-            echo 'AES NCORE stop'
+            sh 'ssh -q weblogic@10.14.7.138 \'/home/weblogic/SCRIPTS/stop_bounce.sh\''
           }
         }
 
         stage('AES OFS Stop') {
           steps {
-            echo 'AES OFS Stop'
+            sh 'ssh -q wasadmin@10.14.5.179 \'/home/wasadmin/SCRIPTS/stop_cluster.sh\''
           }
         }
 
@@ -61,13 +63,14 @@ pipeline {
 
     stage('Stop Tuxedo') {
       steps {
-        echo 'Stop Tuxedo'
+        sh 'ssh -q arbor@10.14.7.154 \'/arborhome/arbor/FXSecServer-1.3.0.5/server/tux_stop\''
       }
     }
 
     stage('AES TUX/APP Status_Stop') {
       steps {
-        echo 'AES TUX/APP Status_Stop'
+        sh '''/home/agd_user/JENKINS_SCRIPTS/health_Check/aes_health_monitor.ksh
+cat /home/agd_user/JENKINS_SCRIPTS/health_Check/AES_Backend_Running_File.txt'''
       }
     }
 
@@ -79,13 +82,13 @@ pipeline {
 
     stage('Start Tuxedo') {
       steps {
-        echo 'Stop Tuxedo'
+        sh 'ssh -q arbor@10.14.7.154 \'/arborhome/arbor/FXSecServer-1.3.0.5/server/tux_start\''
       }
     }
 
     stage('Tux Bounce Mid mail') {
       steps {
-        echo 'Tux bounce Mid mail'
+        sh '/home/agd_user/.web/apache/htdocs/AIRTEL/AES_TUX_MAIL/tux_bounce_mail2.sh'
       }
     }
 
@@ -93,19 +96,21 @@ pipeline {
       parallel {
         stage('iB2B start') {
           steps {
-            echo 'iB2B start'
+            sh '''ssh -q wasadmin@10.5.131.62 \'/home/wasadmin/SCRIPTS/jenkins/startAppCluster.sh\'
+ssh -q wasadmin@10.5.131.64 \'/home/wasadmin/SCRIPTS/jenkins/startRPTCluster.sh\'
+ssh -q wasadmin@10.5.131.64 \'/home/wasadmin/SCRIPTS/jenkins/startSCHCluster.sh\''''
           }
         }
 
         stage('AES NCore start') {
           steps {
-            echo 'AES NCore stop'
+            sh 'ssh -q weblogic@10.14.7.138 \'/home/weblogic/SCRIPTS/start_bounce.sh\''
           }
         }
 
         stage('AES OFS start') {
           steps {
-            echo 'AES OFS start'
+            sh 'ssh -q wasadmin@10.14.5.179 \'/home/wasadmin/SCRIPTS/start_cluster.sh\''
           }
         }
 
@@ -114,19 +119,20 @@ pipeline {
 
     stage('AES Tux/App Status_Start') {
       steps {
-        echo 'AES TUX/APP Status_Start'
+        sh '''/home/agd_user/JENKINS_SCRIPTS/health_Check/aes_health_monitor.ksh
+cat /home/agd_user/JENKINS_SCRIPTS/health_Check/AES_Backend_Running_File.txt'''
       }
     }
 
     stage('Proceed to send closure mail') {
       steps {
-        echo 'Proceed to send final mail'
+        input 'Proceed to send closure mail'
       }
     }
 
     stage('Closure mail') {
       steps {
-        echo 'Closure mail'
+        sh '/home/agd_user/.web/apache/htdocs/AIRTEL/AES_TUX_MAIL/tux_bounce_mail3.sh'
       }
     }
 
