@@ -124,10 +124,9 @@ pipeline {
         echo 'Closure mail'
       }
     }
-
-    parameters {
+  }
+  parameters {
     string(name: 'Change', description: 'Enter Change number')
     string(name: 'Spoc', description: 'Enter SPOC name')
-  }
   }
 }
