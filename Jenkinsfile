@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Input Change No') {
       steps {
-        echo 'Enter Change No. and Implementer\'s name'
+        echo 'parg'
       }
     }
 
@@ -125,5 +125,9 @@ pipeline {
       }
     }
 
+    parameters {
+    string(name: 'Change', description: 'Enter Change number')
+    string(name: 'Spoc', description: 'Enter SPOC name')
+  }
   }
 }
