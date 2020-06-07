@@ -68,8 +68,7 @@ pipeline {
 
     stage('Proceed action Tux Start') {
       steps {
-        echo 'Proceed action Tux Start'
-        input(message: 'print', id: 'input', ok: 'ok', submitter: '$input')
+        input 'Proceed to Start Tux and App'
       }
     }
 
